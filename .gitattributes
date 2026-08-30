@@ -131,12 +131,105 @@ func (l *lista) valorNaPosicao(posicaoProcurada int) (int, bool) {
 	return atual.valor, true
 }
 
+func (l *lista) tamanho() int {
+	atual := l.inicio
+	contador := 0
+	for atual != nil {
+		contador++
+		atual = atual.proximo
+	}
+	return contador
+}
+
+func (l *lista) imprimir() {
+	atual := l.inicio
+	for atual != nil {
+		fmt.Printf("%d -> ", atual.valor)
+		atual = atual.proximo
+	}
+	fmt.Println("nil")
+}
+
 func main() {
-	minhaLista := lista{}
-	minhaLista.adicionarInicio(10)
-	minhaLista.adicionarFim(20)
-	minhaLista.adicionarInicio(5)
-	minhaLista.adicionarFim(30)
-	minhaLista.adicionarFim(40)
-	fmt.Println("Valores inseridos. Teste Ex 2 concluído.")
+	l := lista{}
+	var opcao, valor, pos int
+
+	for {
+		fmt.Println("\n--- MENU LISTA ENCADEADA ---")
+		fmt.Println("1. Adicionar no Início")
+		fmt.Println("2. Adicionar no Fim")
+		fmt.Println("3. Adicionar em Posição")
+		fmt.Println("4. Remover do Início")
+		fmt.Println("5. Remover do Fim")
+		fmt.Println("6. Remover de Posição")
+		fmt.Println("7. Encontrar Posição por Valor")
+		fmt.Println("8. Encontrar Valor por Posição")
+		fmt.Println("9. Mostrar Tamanho e Imprimir Lista")
+		fmt.Println("0. Sair")
+		fmt.Print("Escolha uma opção: ")
+		fmt.Scan(&opcao)
+
+		switch opcao {
+		case 1:
+			fmt.Print("Digite o valor: ")
+			fmt.Scan(&valor)
+			l.adicionarInicio(valor)
+		case 2:
+			fmt.Print("Digite o valor: ")
+			fmt.Scan(&valor)
+			l.adicionarFim(valor)
+		case 3:
+			fmt.Print("Digite o valor e a posição (separados por espaço): ")
+			fmt.Scan(&valor, &pos)
+			if l.adicionarPosicao(valor, pos) {
+				fmt.Println("Adicionado com sucesso.")
+			} else {
+				fmt.Println("Falha: Posição inválida.")
+			}
+		case 4:
+			if v, ok := l.removerInicio(); ok {
+				fmt.Printf("Removido: %d\n", v)
+			} else {
+				fmt.Println("Falha: Lista vazia.")
+			}
+		case 5:
+			if v, ok := l.removerFim(); ok {
+				fmt.Printf("Removido: %d\n", v)
+			} else {
+				fmt.Println("Falha: Lista vazia.")
+			}
+		case 6:
+			fmt.Print("Digite a posição: ")
+			fmt.Scan(&pos)
+			if v, ok := l.removerPosicao(pos); ok {
+				fmt.Printf("Removido: %d\n", v)
+			} else {
+				fmt.Println("Falha: Posição inválida ou lista vazia.")
+			}
+		case 7:
+			fmt.Print("Digite o valor procurado: ")
+			fmt.Scan(&valor)
+			if p, ok := l.posicao(valor); ok {
+				fmt.Printf("Valor encontrado na posição: %d\n", p)
+			} else {
+				fmt.Println("Valor não encontrado.")
+			}
+		case 8:
+			fmt.Print("Digite a posição procurada: ")
+			fmt.Scan(&pos)
+			if v, ok := l.valorNaPosicao(pos); ok {
+				fmt.Printf("Valor na posição %d é: %d\n", pos, v)
+			} else {
+				fmt.Println("Falha: Posição inválida.")
+			}
+		case 9:
+			fmt.Printf("Tamanho atual: %d\n", l.tamanho())
+			l.imprimir()
+		case 0:
+			fmt.Println("Saindo...")
+			return
+		default:
+			fmt.Println("Opção inválida.")
+		}
+	}
 }
