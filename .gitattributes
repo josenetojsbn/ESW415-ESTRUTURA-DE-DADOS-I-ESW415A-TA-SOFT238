@@ -1,2 +1,41 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+package main
+
+import "fmt"
+
+type no struct {
+	valor   int
+	proximo *no
+}
+
+type lista struct {
+	inicio *no
+}
+
+func (l *lista) adicionarInicio(valor int) {
+	novo := &no{valor: valor, proximo: l.inicio}
+	l.inicio = novo
+}
+
+func (l *lista) adicionarFim(valor int) {
+	novo := &no{valor: valor}
+	if l.inicio == nil {
+		l.inicio = novo
+		return
+	}
+	atual := l.inicio
+	for atual.proximo != nil {
+		atual = atual.proximo
+	}
+	atual.proximo = novo
+}
+
+// Main temporário para testar o Ex 2
+func main() {
+	minhaLista := lista{}
+	minhaLista.adicionarInicio(10)
+	minhaLista.adicionarFim(20)
+	minhaLista.adicionarInicio(5)
+	minhaLista.adicionarFim(30)
+	minhaLista.adicionarFim(40)
+	fmt.Println("Valores inseridos. Teste Ex 2 concluído.")
+}
