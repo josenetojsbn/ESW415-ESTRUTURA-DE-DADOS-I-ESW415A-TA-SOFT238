@@ -29,7 +29,29 @@ func (l *lista) adicionarFim(valor int) {
 	atual.proximo = novo
 }
 
-// Main temporário para testar o Ex 2
+func (l *lista) adicionarPosicao(valor, posicao int) bool {
+	if posicao < 0 {
+		return false
+	}
+	if posicao == 0 {
+		l.adicionarInicio(valor)
+		return true
+	}
+	atual := l.inicio
+	for i := 0; i < posicao-1; i++ {
+		if atual == nil {
+			return false
+		}
+		atual = atual.proximo
+	}
+	if atual == nil {
+		return false
+	}
+	novo := &no{valor: valor, proximo: atual.proximo}
+	atual.proximo = novo
+	return true
+}
+
 func main() {
 	minhaLista := lista{}
 	minhaLista.adicionarInicio(10)
