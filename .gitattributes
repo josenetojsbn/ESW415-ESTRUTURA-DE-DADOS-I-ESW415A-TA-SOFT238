@@ -101,6 +101,19 @@ func (l *lista) removerPosicao(posicao int) (int, bool) {
 	return removido, true
 }
 
+func (l *lista) posicao(valorProcurado int) (int, bool) {
+	atual := l.inicio
+	indice := 0
+	for atual != nil {
+		if atual.valor == valorProcurado {
+			return indice, true
+		}
+		atual = atual.proximo
+		indice++
+	}
+	return 0, false
+}
+
 func main() {
 	minhaLista := lista{}
 	minhaLista.adicionarInicio(10)
