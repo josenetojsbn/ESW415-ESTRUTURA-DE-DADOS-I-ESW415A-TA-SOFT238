@@ -79,6 +79,28 @@ func (l *lista) removerFim() (int, bool) {
 	return removido, true
 }
 
+func (l *lista) removerPosicao(posicao int) (int, bool) {
+	if posicao < 0 || l.inicio == nil {
+		return 0, false
+	}
+	if posicao == 0 {
+		return l.removerInicio()
+	}
+	atual := l.inicio
+	for i := 0; i < posicao-1; i++ {
+		if atual.proximo == nil {
+			return 0, false
+		}
+		atual = atual.proximo
+	}
+	if atual.proximo == nil {
+		return 0, false
+	}
+	removido := atual.proximo.valor
+	atual.proximo = atual.proximo.proximo
+	return removido, true
+}
+
 func main() {
 	minhaLista := lista{}
 	minhaLista.adicionarInicio(10)
